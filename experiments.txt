@@ -1,0 +1,29 @@
+
+Names: Terry Kusunoki-Martin and Joon Park
+Date: 3/21/16
+
+Best parameter values:
+
+						house_votes		spambase_bool	spambase	optdigits
+naive Bayes				m=100			m=100			m=100		m=100
+k nearest neighbors		k=4				k=4				k=4			k=4
+support vector machine	ker=linear		ker=rbf			ker=linear	ker=linear
+
+
+
+Test set accuracy with best parameters (80/20 random split):
+
+						house_votes		spambase_bool	spambase	optdigits
+naive Bayes				92.3%			60.6%			65.6%		9.0%
+k nearest neighbors		91.7%			92.5%			80.0%		98.7%
+support vector machine	95.6%			92.8%			89.8%		98.1%
+
+
+
+Observations: When was each algorithm most/least successful? Can you explain any of these differences? Do the best parameters make sense?
+
+Naive Bayes was the most successful on the smallest data set, house_votes.data.  This makes sense, since larger data sets are more likely to have dependant factors within a data point's dimensions.  It was the least successful on optdigits.  This may be because there were the most labels in the optdigits file, and thus the naive assumptions were more harmful.  The optimal parameters make sense.  The prior in each case is high enough to still be somewhat relevent, but is ultimately dominated by the rest of the p calculation.
+
+K Nearest Neighbors was the most successful on optdigits.  This, again, may be explained by the fact that optdigits had so many unique labels.  This means that the differences between all possible labels were more pronounced, and thus the algorithm was able to pick up on unique data attributes more easily.  The algorithm performed the worst on spambase.  This is easily explained by the "curse of dimensionality."  As opposed to optdigits, which had 16 dimensions, spambase had 40 dimensions.  This increased the distance between relevant points.  The optimal parameters for KNN make sense.  Once k starts to get too high, the plurality starts to be influenced by votes from dissimilar data points (people who don't even live on your block aren't your neighbors).
+
+SVM performed the best on optdigits.  This may be because optdigits has the largest decision surface, and thus the highest dimensional space of inputs.  It is easier to find linearly seperable sets within a higher-dimensional space than a lower-dimensional one.  SVM performed the worst on spambase.  The added dimensions in spambase, especially compared to the binary decision surface, made the data much harder to separate with a wide margin of error.  Thus the classification was less accurate.  The parameters make sense for these data files.  Using a linear kernel is increasingly more effective for files with larger decision surfaces and lower dimensions.
